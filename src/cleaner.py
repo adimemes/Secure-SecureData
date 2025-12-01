@@ -5,7 +5,7 @@ import os
 # --- KONFIGURASI ---
 INPUT_FILE = './data/raw/Data_Kotor.csv'
 OUTPUT_FILE = './data/processed/Data_Bersih.csv'
-SLANG_FILE = './data/slangword/SlangWord.txt'
+SLANG_FILE = './data/slangword/combined_slang_words.txt'
 
 def load_slang_dictionary(filepath):
     """
