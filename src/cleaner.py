@@ -5,19 +5,44 @@ import os
 # --- KONFIGURASI ---
 INPUT_FILE = './data/raw/Data_Kotor.csv'
 OUTPUT_FILE = './data/processed/Data_Bersih.csv'
+SLANG_FILE = './data/slangword/SlangWord.txt'
 
-# Kamus Normalisasi (Bisa ditambah nanti)
-slang_dict = {
-    "yg": "yang", "gk": "tidak", "ga": "tidak", "gak": "tidak",
-    "sy": "saya", "gw": "saya", "aku": "saya", "gue": "saya",
-    "blm": "belum", "udh": "sudah", "sdh": "sudah",
-    "trf": "transfer", "tf": "transfer",
-    "tlg": "tolong", "pls": "tolong",
-    "dgn": "dengan", "dr": "dari",
-    "bgt": "banget", "min": "admin",
-    "balikin": "kembalikan", "woy": "",
-    "tp": "tapi", "krn": "karena", "jd": "jadi"
-}
+def load_slang_dictionary(filepath):
+    """
+    Membaca file text slang word dan mengubahnya menjadi Python Dictionary.
+    Asumsi format di file text adalah: kata_alay:kata_baku (dipisah titik dua)
+    """
+    slang_map = {}
+    
+    if not os.path.exists(filepath):
+        print(f"⚠️ Peringatan: File slang '{filepath}' tidak ditemukan. Normalisasi slang akan dilewati.")
+        return slang_map
+
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            for line in f:
+                # Lewati baris kosong
+                if not line.strip():
+                    continue
+                
+                # Sesuaikan delimiter ini dengan format file Anda (misal ':' atau '=')
+                # Contoh format file: 
+                # gw: saya
+                # ak: aku
+                parts = line.split(':') 
+                
+                if len(parts) == 2:
+                    key = parts[0].strip()
+                    value = parts[1].strip()
+                    slang_map[key] = value
+        print(f"✅ Berhasil memuat {len(slang_map)} kata slang.")
+    except Exception as e:
+        print(f"❌ Gagal membaca file slang: {e}")
+        
+    return slang_map
+
+# Load dictionary saat script dimulai
+slang_dict = load_slang_dictionary(SLANG_FILE)
 
 def redact_pii(text):
     """
