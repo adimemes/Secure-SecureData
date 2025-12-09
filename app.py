@@ -72,8 +72,7 @@ tab1, tab2 = st.tabs(["⚡ Live Tester", "📂 Batch Processing (CSV)"])
 with tab1:
     st.subheader("Uji Coba Teks")
     # Contoh teks default yang sesuai dengan kamus kamu (kmrn, tlp, jgn)
-    user_input = st.text_area("Input Teks", 
-                              "Hati2 guys penipuan, kmrn saya di tlp no +62818000999 ngaku dr CS, jgn pcaya.")
+    user_input = st.text_area("")
     
     if st.button("Proses Teks"):
         with st.spinner('Membaca kamus slang & membersihkan data...'):

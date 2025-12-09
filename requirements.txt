@@ -1,6 +1,2 @@
-import os
-import pandas
-import re
-import streamlit
-import random
-import json
+pandas
+streamlit
